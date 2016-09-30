@@ -9,7 +9,7 @@ extents = Vector2( 960, 10 )
 
 [node name="Arena" type="Node2D"]
 
-[node name="Ground" type="StaticBody2D" parent="."]
+[node name="Ground" type="StaticBody2D" parent="." groups=[ "Ground" ]]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )

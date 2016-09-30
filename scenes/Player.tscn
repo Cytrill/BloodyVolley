@@ -64,4 +64,12 @@ polygon = Vector2Array( 27.1179, -38.6426, 31.0193, -26.4507, 35.4084, -17.1849,
 shape_range = Vector2( 0, 2 )
 trigger = false
 
+[node name="RayCast2D" type="RayCast2D" parent="PlayerBody"]
+
+transform/pos = Vector2( 0, 63 )
+enabled = true
+cast_to = Vector2( 0, 10 )
+layer_mask = 1
+type_mask = 15
+
 
