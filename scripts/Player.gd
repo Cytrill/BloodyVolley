@@ -5,6 +5,7 @@ var joy_tresh = 0.2
 var jump_ready = true
 var jump_timer = 0.0
 var jump_time = 1.0
+var on_ground = false
 
 func _ready():
 	get_node("PlayerBody/RayCast2D").add_exception(get_node("PlayerBody"))
@@ -19,11 +20,14 @@ func _fixed_process(delta):
 	
 	var shadow_scale = (abs(get_node("PlayerBody").get_global_pos().y - 846)*0.0005)+0.6
 	get_node("Shadow").set_scale(Vector2(shadow_scale, shadow_scale))
-	
+	if (!on_ground):
+		on_ground = get_node("PlayerBody/RayCast2D").is_colliding() && get_node("PlayerBody/RayCast2D").get_collider().is_in_group("Ground")
 	jump_timer += delta
-	if jump_timer >= jump_time && get_node("PlayerBody/RayCast2D").is_colliding() && get_node("PlayerBody/RayCast2D").get_collider().is_in_group("Ground"):
+	if jump_timer >= jump_time && on_ground:
 		jump_ready = true
 		jump_timer = 0.0
+	if jump_timer > jump_time / 2:
+		on_ground = false
 
 func handle_input(delta):
 	if Input.get_joy_axis(player_number,  0) < -joy_tresh:

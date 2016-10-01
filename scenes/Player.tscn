@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
-[ext_resource path="res://gfx/player.png" type="Texture" id=2]
-[ext_resource path="res://gfx/player_shadow.png" type="Texture" id=3]
+[ext_resource path="res://gfx/player_ani.png" type="Texture" id=2]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -18,6 +17,30 @@ points = Vector2Array( -36.2797, -18.1602, -31.403, -30.3521, 31.0193, -26.4507,
 
 custom_solver_bias = 0.0
 points = Vector2Array( -22.1372, 55.9662, -32.3783, 49.6264, -39.6934, 41.336, -45.0579, 31.5825, -47.4962, 20.366, -47.4962, 7.68648, -43.5948, -5.9684, -36.2797, -18.1602, 35.4084, -17.1849, 40.2851, -9.38213, 45.1618, -0.116318, 47.6002, 11.5879, 47.6002, 23.7797, 45.1618, 33.5332, 38.8221, 44.7497, 29.5563, 53.0402, 14.9261, 61.3306, 1.27118, 63.769, -12.3837, 61.8183 )
+
+[sub_resource type="Animation" id=4]
+
+resource/name = "Idle"
+length = 1.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0, 0.5 ), "transitions":FloatArray( 1, 1 ), "update":0, "values":[ 0, 2 ] }
+
+[sub_resource type="Animation" id=5]
+
+resource/name = "bounce"
+length = 1.0
+loop = false
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 ), "transitions":FloatArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ), "update":0, "values":[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 4, 1 ] }
 
 [node name="Player" type="Node2D"]
 
@@ -57,9 +80,12 @@ damp_override/angular = -1.0
 
 transform/scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
+hframes = 9
+frame = 1
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerBody"]
 
+visibility/visible = false
 build_mode = 0
 polygon = Vector2Array( 27.1179, -38.6426, 31.0193, -26.4507, 35.4084, -17.1849, 40.2851, -9.38213, 45.1618, -0.116318, 47.6002, 11.5879, 47.6002, 23.7797, 45.1618, 33.5332, 38.8221, 44.7497, 29.5563, 53.0402, 14.9261, 61.3306, 1.27118, 63.769, -12.3837, 61.8183, -22.1372, 55.9662, -32.3783, 49.6264, -39.6934, 41.336, -45.0579, 31.5825, -47.4962, 20.366, -47.4962, 7.68648, -43.5948, -5.9684, -36.2797, -18.1602, -31.403, -30.3521, -26.5262, -43.0316, -19.6988, -53.7605, -8.96997, -61.0756, 0.295837, -63.0263, 10.0493, -59.6125, 18.3398, -52.7851 )
 shape_range = Vector2( 0, 2 )
@@ -73,12 +99,16 @@ cast_to = Vector2( 0, 10 )
 layer_mask = 1
 type_mask = 15
 
-[node name="Shadow" type="Sprite" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerBody"]
 
-visibility/opacity = 0.3
-transform/pos = Vector2( 0, 37 )
-transform/scale = Vector2( 0.6, 0.6 )
-z/z = -1
-texture = ExtResource( 3 )
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/Idle = SubResource( 4 )
+anims/bounce = SubResource( 5 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "Idle"
 
 
