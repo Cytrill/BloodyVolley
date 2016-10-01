@@ -1,7 +1,10 @@
 extends Node2D
 
+var kickoff = true
+var team_kickoff = 0
 var time_elapsed = 0
 var pl_player = preload("res://scenes/Player.tscn")
+var pl_ball = preload("res://scenes/Ball.tscn")
 #Player Colors
 const colarray = [Color(0, 0, 1), Color(0, 1, 0), Color(0, 1, 1),
 	Color(1, 0, 0), Color(1, 0, 1), Color(1, 1, 0), Color(1, 1, 1),
@@ -11,6 +14,15 @@ func _ready():
 	set_fixed_process(true)
 
 func _fixed_process(delta):
+	if kickoff:
+		var ball = pl_ball.instance()
+		if team_kickoff == 0:
+			ball.set_pos(Vector2(760, 500))
+		else:
+			ball.set_pos(Vector2(1160, 500))
+		get_node("Balls").add_child(ball)
+		kickoff = false
+		
 	for i in range(0,128):
 		if Input.is_joy_button_pressed(i, 0):
 			if (!get_node("Players").has_node(cytrill.get_name(i))):
