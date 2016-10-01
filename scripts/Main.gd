@@ -23,7 +23,12 @@ func _fixed_process(delta):
 				var player = pl_player.instance()
 				#player.set_player_scale(Vector2(0.6, 0.6))
 				player.set_name(cytrill.get_name(i))
-				player.set_pos(Vector2(i*100+100, 100))
+				if i%2 != 0:
+					player.set_pos(Vector2(i*100+100, 100))
+					player.team_number = 0
+				else:
+					player.set_pos(Vector2(1820-i*100, 100))
+					player.team_number = 1
 				player.player_number = i
 				#highscore[cytrill.get_name(i)] = 0 #Init Playerscore
 				#var texture_index = (i+1)
