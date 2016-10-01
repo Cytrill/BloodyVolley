@@ -35,4 +35,3 @@ func handle_input(delta):
 	if jump_ready && Input.get_joy_axis(player_number, 1) < -joy_tresh:
 		get_node("PlayerBody").apply_impulse(Vector2(0, 30), Vector2(0, -1100))
 		jump_ready = false
-		print("Jump")
