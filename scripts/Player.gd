@@ -1,6 +1,7 @@
 extends Node2D
 
 var player_number = 0
+var team_number = 0
 var joy_tresh = 0.2
 var jump_ready = true
 var jump_timer = 0.0
