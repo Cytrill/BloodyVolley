@@ -23,12 +23,13 @@ func _fixed_process(delta):
 	get_node("Shadow").set_scale(Vector2(shadow_scale, shadow_scale))
 	if (!on_ground):
 		on_ground = get_node("PlayerBody/RayCast2D").is_colliding() && get_node("PlayerBody/RayCast2D").get_collider().is_in_group("Ground")
+		if (on_ground && get_node("AnimationPlayer").get_current_animation() != "bounce"):
+			get_node("AnimationPlayer").play("bounce")
 	jump_timer += delta
 	if jump_timer >= jump_time && on_ground:
 		jump_ready = true
 		jump_timer = 0.0
-	if jump_timer > jump_time / 2:
-		on_ground = false
+	
 
 func handle_input(delta):
 	if Input.get_joy_axis(player_number,  0) < -joy_tresh:
@@ -40,3 +41,9 @@ func handle_input(delta):
 	if jump_ready && Input.get_joy_axis(player_number, 1) < -joy_tresh:
 		get_node("PlayerBody").apply_impulse(Vector2(0, 30), Vector2(0, -1100))
 		jump_ready = false
+		on_ground = false
+
+func _on_AnimationPlayer_finished():
+	print("FINISHED")
+	get_node("AnimationPlayer").play("idle")
+	
