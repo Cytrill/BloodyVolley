@@ -17,9 +17,9 @@ func _fixed_process(delta):
 	if kickoff:
 		var ball = pl_ball.instance()
 		if team_kickoff == 0:
-			ball.set_pos(Vector2(760, 500))
+			ball.set_pos(Vector2(760, 600))
 		else:
-			ball.set_pos(Vector2(1160, 500))
+			ball.set_pos(Vector2(1160, 600))
 		get_node("Balls").add_child(ball)
 		kickoff = false
 		
