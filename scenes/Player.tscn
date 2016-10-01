@@ -59,8 +59,8 @@ shapes/1/trigger = false
 shapes/2/shape = SubResource( 3 )
 shapes/2/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/2/trigger = false
-collision/layers = 3
-collision/mask = 3
+collision/layers = 1
+collision/mask = 1
 mode = 0
 mass = 1.0
 friction = 0.5
@@ -68,8 +68,8 @@ bounce = 0.2
 gravity_scale = 2.0
 custom_integrator = false
 continuous_cd = 0
-contacts_reported = 2
-contact_monitor = true
+contacts_reported = 0
+contact_monitor = false
 sleeping = false
 can_sleep = true
 velocity/linear = Vector2( 0, 0 )
@@ -82,7 +82,6 @@ damp_override/angular = -1.0
 transform/scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 2 )
 hframes = 9
-frame = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerBody"]
 

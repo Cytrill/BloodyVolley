@@ -30,7 +30,7 @@ func _fixed_process(delta):
 		if (on_ground && get_node("AnimationPlayer").get_current_animation() != "bounce"):
 			get_node("AnimationPlayer").play("bounce")
 	jump_timer += delta
-	if jump_timer >= jump_time && on_ground:
+	if jump_timer >= jump_time && get_node("PlayerBody/RayCast2D").is_colliding() && get_node("PlayerBody/RayCast2D").get_collider().is_in_group("Ground"):
 		jump_ready = true
 		jump_timer = 0.0
 	
