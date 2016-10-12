@@ -1,5 +1,9 @@
 extends Node2D
 
+
+const IT_JOYSTICK = 0
+const IT_ACTIONS = 1
+
 var player_number = 0
 var team_number = 0
 var joy_tresh = 0.2
@@ -7,6 +11,8 @@ var jump_ready = true
 var jump_timer = 0.0
 var jump_time = 1.0
 var on_ground = false
+var input_type = IT_JOYSTICK
+var action_player_id = 0
 
 func _ready():
 	get_node("PlayerBody/RayCast2D").add_exception(get_node("PlayerBody"))
@@ -36,18 +42,41 @@ func _fixed_process(delta):
 	
 
 func handle_input(delta):
+	if input_type == IT_JOYSTICK:
+		handle_input_joystick(delta)
+	elif input_type == IT_ACTIONS:
+		handle_input_actions(delta)
+		
+func handle_input_joystick(delta):
 	if Input.get_joy_axis(player_number,  0) < -joy_tresh:
-		get_node("PlayerBody").apply_impulse(Vector2(0,30), Vector2(-20, 0))
+		move(-1)
 	elif Input.get_joy_axis(player_number,  0) > joy_tresh:
-		get_node("PlayerBody").apply_impulse(Vector2(0,30), Vector2(20, 0))
+		move(1)
 	else:
+		move(0)
+	if Input.get_joy_axis(player_number, 1) < -joy_tresh:
+		jump()
+
+func move(direction):
+	if (direction == 0):
 		get_node("PlayerBody").apply_impulse(Vector2(0,0), Vector2(-get_node("PlayerBody").get_linear_velocity().x*0.5, 0))
-	if jump_ready && Input.get_joy_axis(player_number, 1) < -joy_tresh:
+	else:
+		get_node("PlayerBody").apply_impulse(Vector2(0,30), Vector2(20*direction, 0))
+
+func jump():
+	if jump_ready:
 		get_node("PlayerBody").apply_impulse(Vector2(0, 30), Vector2(0, -1100))
 		jump_ready = false
 		on_ground = false
 
+func handle_input_actions(delta):
+	if (Input.is_action_pressed("player"+str(action_player_id)+"_jump")):
+		jump()
+	if (Input.is_action_pressed("player"+str(action_player_id)+"_left")):
+		move(-1)
+	if (Input.is_action_pressed("player"+str(action_player_id)+"_right")):
+		move(1)
+
 func _on_AnimationPlayer_finished():
-	print("FINISHED")
 	get_node("AnimationPlayer").play("idle")
 	

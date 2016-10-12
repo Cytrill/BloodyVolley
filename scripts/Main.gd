@@ -5,6 +5,7 @@ var team_kickoff = 1
 var time_elapsed = 0
 var pl_player = preload("res://scenes/Player.tscn")
 var pl_ball = preload("res://scenes/Ball.tscn")
+
 #Player Colors
 const colarray = [Color(0, 0, 1), Color(0, 1, 0), Color(0, 1, 1),
 	Color(1, 0, 0), Color(1, 0, 1), Color(1, 1, 0), Color(1, 1, 1),
@@ -22,7 +23,31 @@ func _fixed_process(delta):
 			ball.set_pos(Vector2(1160, 600))
 		get_node("Balls").add_child(ball)
 		kickoff = false
-		
+	
+	for i in range(0,128):
+		if Input.is_action_pressed("player"+str(i)+"_jump"):
+			if (!get_node("Players").has_node("Action"+str(i))):
+				var player = pl_player.instance()
+				player.set_name("Action"+str(i))
+				player.input_type = player.IT_ACTIONS
+				player.set_pos(Vector2(i*100+100, 100))
+				var action_player_id = 1
+				for p in get_node("Players").get_children():
+					if (p.input_type == player.IT_ACTIONS):
+						action_player_id +=1
+				player.action_player_id = action_player_id
+				player.team_number = get_node("Players").get_child_count() % 2
+				player.player_number = i
+				if player.team_number != 0:
+					player.set_pos(Vector2(i*100+100, 100))
+				else:
+					player.set_pos(Vector2(1820-i*100, 100))
+				player.add_to_group("Players")
+				player.get_node("PlayerBody/PlayerSprite").set_modulate(colarray[i%10])
+				player.get_node("Shadow").set_modulate(colarray[i%10])
+				get_node("Players").add_child(player)
+				
+	
 	for i in range(0,128):
 		if Input.is_joy_button_pressed(i, 0):
 			if (!get_node("Players").has_node(cytrill.get_name(i))):
@@ -34,13 +59,13 @@ func _fixed_process(delta):
 				print(cytrill.get_name(i)+ " has joined the game!")
 				var player = pl_player.instance()
 				#player.set_player_scale(Vector2(0.6, 0.6))
+				player.input_type = player.IT_JOYSTICK
 				player.set_name(cytrill.get_name(i))
-				if i%2 != 0:
+				player.team_number = get_node("Players").get_child_count() % 2
+				if player.team_number != 0:
 					player.set_pos(Vector2(i*100+100, 100))
-					player.team_number = 0
 				else:
 					player.set_pos(Vector2(1820-i*100, 100))
-					player.team_number = 1
 				player.player_number = i
 				#highscore[cytrill.get_name(i)] = 0 #Init Playerscore
 				#var texture_index = (i+1)
