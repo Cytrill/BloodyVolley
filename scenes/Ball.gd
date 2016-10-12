@@ -10,4 +10,3 @@ func _fixed_process(delta):
 	if (body.get_gravity_scale() == 0):
 		if (body.get_colliding_bodies().size() > 0):
 			body.set_gravity_scale(1)
-	

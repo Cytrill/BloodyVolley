@@ -25,10 +25,6 @@ func _fixed_process(delta):
 	
 	get_node("Shadow").set_global_pos(Vector2(get_node("PlayerBody").get_global_pos().x, 885))
 	
-	for body in get_node("PlayerBody").get_colliding_bodies():
-		if body.is_in_group("Balls"):
-			body.set_gravity_scale(1.0)
-	
 	var shadow_scale = (abs(get_node("PlayerBody").get_global_pos().y - 846)*0.0005)+0.6
 	get_node("Shadow").set_scale(Vector2(shadow_scale, shadow_scale))
 	if (!on_ground):
