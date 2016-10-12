@@ -1,6 +1,5 @@
 extends Node2D
 
-
 const IT_JOYSTICK = 0
 const IT_ACTIONS = 1
 
@@ -29,8 +28,7 @@ func _fixed_process(delta):
 	get_node("Shadow").set_scale(Vector2(shadow_scale, shadow_scale))
 	if (!on_ground):
 		on_ground = get_node("PlayerBody/RayCast2D").is_colliding() && get_node("PlayerBody/RayCast2D").get_collider().is_in_group("Ground")
-		if (on_ground && get_node("AnimationPlayer").get_current_animation() != "bounce"):
-			get_node("AnimationPlayer").play("bounce")
+			
 	jump_timer += delta
 	if jump_timer >= jump_time && get_node("PlayerBody/RayCast2D").is_colliding() && get_node("PlayerBody/RayCast2D").get_collider().is_in_group("Ground"):
 		jump_ready = true
@@ -59,6 +57,12 @@ func move(direction):
 	else:
 		get_node("PlayerBody").apply_impulse(Vector2(0,30), Vector2(20*direction, 0))
 
+	if abs(get_node("PlayerBody").get_linear_velocity().x) < 5:
+		if get_node("AnimationPlayer").get_current_animation() != "idle":
+			get_node("AnimationPlayer").play("idle")
+	elif get_node("AnimationPlayer").get_current_animation() != "bounce":
+		get_node("AnimationPlayer").play("bounce")
+
 func jump():
 	if jump_ready:
 		get_node("PlayerBody").apply_impulse(Vector2(0, 30), Vector2(0, -1100))
@@ -66,13 +70,15 @@ func jump():
 		on_ground = false
 
 func handle_input_actions(delta):
-	if (Input.is_action_pressed("player"+str(action_player_id)+"_jump")):
-		jump()
 	if (Input.is_action_pressed("player"+str(action_player_id)+"_left")):
 		move(-1)
-	if (Input.is_action_pressed("player"+str(action_player_id)+"_right")):
+	elif (Input.is_action_pressed("player"+str(action_player_id)+"_right")):
 		move(1)
+	else:
+		move(0)
+		
+	if (Input.is_action_pressed("player"+str(action_player_id)+"_jump")):
+		jump()
 
-func _on_AnimationPlayer_finished():
-	get_node("AnimationPlayer").play("idle")
+
 	

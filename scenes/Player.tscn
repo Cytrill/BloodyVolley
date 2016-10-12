@@ -23,8 +23,8 @@ points = Vector2Array( -22.1372, 55.9662, -32.3783, 49.6264, -39.6934, 41.336, -
 
 resource/name = "bounce"
 length = 1.0
-loop = false
-step = 0.05
+loop = true
+step = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("PlayerBody/PlayerSprite:frame")
 tracks/0/interp = 2
@@ -35,7 +35,7 @@ tracks/0/keys = { "times":FloatArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 
 
 resource/name = "idle"
 length = 1.0
-loop = true
+loop = false
 step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("PlayerBody/PlayerSprite:frame")
@@ -81,6 +81,7 @@ damp_override/angular = -1.0
 
 texture = ExtResource( 2 )
 hframes = 9
+frame = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerBody"]
 
@@ -114,10 +115,8 @@ root/root = NodePath("..")
 anims/bounce = SubResource( 4 )
 anims/idle = SubResource( 5 )
 playback/active = true
-playback/speed = 1.0
+playback/speed = 1.5
 blend_times = [  ]
 autoplay = "idle"
-
-[connection signal="finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_finished"]
 
 
