@@ -68,7 +68,7 @@ func jump():
 		get_node("PlayerBody").apply_impulse(Vector2(0, 30), Vector2(0, -1100))
 		jump_ready = false
 		on_ground = false
-		print(get_node("PlayerBody").get_pos().x)
+
 
 func handle_input_actions(delta):
 	if (Input.is_action_pressed("player"+str(action_player_id)+"_left")):
@@ -77,7 +77,7 @@ func handle_input_actions(delta):
 		move(1)
 	else:
 		move(0)
-		
+
 	if (Input.is_action_pressed("player"+str(action_player_id)+"_jump")):
 		jump()
 

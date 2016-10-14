@@ -18,10 +18,15 @@ const colarray = [Color(0, 0, 1), Color(0, 1, 0), Color(0, 1, 1),
 func score(team):
 	if (team == 0):
 		score_left+=1
+		team_kickoff=1
 	else:
 		score_right+=1
+		team_kickoff=0
 	get_node("GUI/ScoreLeft").set_text(str(score_left))
 	get_node("GUI/ScoreRight").set_text(str(score_right))
+	
+	
+	kickoff = true
 	
 	
 func _ready():
@@ -35,7 +40,7 @@ func _fixed_process(delta):
 		var ball_body = ball.get_node("RigidBody2D")
 		ball_body.set_linear_velocity(Vector2(0,0))
 		if team_kickoff == 0:
-			ball_body.set_pos(Vector2(700,200))
+			ball_body.set_pos(Vector2(900,200))
 		else:
 			ball_body.set_pos(Vector2(200,200))
 		ball_body.set_gravity_scale(0)
@@ -48,10 +53,10 @@ func _fixed_process(delta):
 				player.set_name("Action"+str(i))
 				player.input_type = player.IT_ACTIONS
 				player.set_pos(Vector2(i*100+100, 100))
-				var action_player_id = 1
+				var action_player_id = i
 				for p in get_node("Players").get_children():
 					if (p.input_type == player.IT_ACTIONS):
-						action_player_id +=1
+						action_player_id = i
 				player.action_player_id = action_player_id
 				player.team_number = get_node("Players").get_child_count() % 2
 				player.player_number = i
@@ -84,12 +89,6 @@ func _fixed_process(delta):
 				else:
 					player.set_pos(Vector2(1820-i*100, 100))
 				player.player_number = i
-				#highscore[cytrill.get_name(i)] = 0 #Init Playerscore
-				#var texture_index = (i+1)
-				
-				#if (texture_index > texture_count):
-				#	 texture_index = (i % texture_count)+1
-				#var t = load("res://gfx/Player" + str(texture_index) + ".png")
 				player.add_to_group("Players")
 				var color = Color(1,1,1)
 				color.s = 1

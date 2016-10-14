@@ -17,4 +17,4 @@ func _fixed_process(delta):
 					get_node("/root/World").score(0)
 				else:
 					get_node("/root/World").score(1)
-				get_node("/root/World").kickoff = true
+				
