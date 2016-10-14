@@ -1,7 +1,7 @@
 extends Node2D
 
 var kickoff = true
-var team_kickoff = 1
+var team_kickoff = 0
 var time_elapsed = 0
 var pl_player = preload("res://scenes/Player.tscn")
 var pl_ball = preload("res://scenes/Ball.tscn")
