@@ -5,23 +5,40 @@ var team_kickoff = 1
 var time_elapsed = 0
 var pl_player = preload("res://scenes/Player.tscn")
 var pl_ball = preload("res://scenes/Ball.tscn")
+var ball = null
+
+var score_left = 0
+var score_right = 0
 
 #Player Colors
 const colarray = [Color(0, 0, 1), Color(0, 1, 0), Color(0, 1, 1),
 	Color(1, 0, 0), Color(1, 0, 1), Color(1, 1, 0), Color(1, 1, 1),
 	Color(1, 0, 0), Color(1, 0, 0.5), Color(0.5, 0, 1)]
 
+func score(team):
+	if (team == 0):
+		score_left+=1
+	else:
+		score_right+=1
+	get_node("GUI/ScoreLeft").set_text(str(score_left))
+	get_node("GUI/ScoreRight").set_text(str(score_right))
+	
+	
 func _ready():
 	set_fixed_process(true)
 
 func _fixed_process(delta):
 	if kickoff:
-		var ball = pl_ball.instance()
+		if ball == null:
+			ball = pl_ball.instance()
+			get_node("Balls").add_child(ball)
+		var ball_body = ball.get_node("RigidBody2D")
+		ball_body.set_linear_velocity(Vector2(0,0))
 		if team_kickoff == 0:
-			ball.set_pos(Vector2(760, 600))
+			ball_body.set_pos(Vector2(700,200))
 		else:
-			ball.set_pos(Vector2(1160, 600))
-		get_node("Balls").add_child(ball)
+			ball_body.set_pos(Vector2(200,200))
+		ball_body.set_gravity_scale(0)
 		kickoff = false
 	
 	for i in range(0,128):
