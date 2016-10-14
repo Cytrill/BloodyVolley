@@ -25,7 +25,6 @@ func score(team):
 	get_node("GUI/ScoreLeft").set_text(str(score_left))
 	get_node("GUI/ScoreRight").set_text(str(score_right))
 	
-	
 	kickoff = true
 	
 	
@@ -40,9 +39,9 @@ func _fixed_process(delta):
 		var ball_body = ball.get_node("RigidBody2D")
 		ball_body.set_linear_velocity(Vector2(0,0))
 		if team_kickoff == 0:
-			ball_body.set_pos(Vector2(900,200))
+			ball_body.set_global_pos(Vector2(get_viewport_rect().size.width/3,400))
 		else:
-			ball_body.set_pos(Vector2(200,200))
+			ball_body.set_global_pos(Vector2( get_viewport_rect().size.width - (get_viewport_rect().size.width/3),400))
 		ball_body.set_gravity_scale(0)
 		kickoff = false
 	
@@ -80,7 +79,7 @@ func _fixed_process(delta):
 				
 				print(cytrill.get_name(i)+ " has joined the game!")
 				var player = pl_player.instance()
-				#player.set_player_scale(Vector2(0.6, 0.6))
+				
 				player.input_type = player.IT_JOYSTICK
 				player.set_name(cytrill.get_name(i))
 				player.team_number = get_node("Players").get_child_count() % 2
