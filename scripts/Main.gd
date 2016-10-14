@@ -16,7 +16,7 @@ const colarray = [Color(0, 0, 1), Color(0, 1, 0), Color(0, 1, 1),
 	Color(1, 0, 0), Color(1, 0, 0.5), Color(0.5, 0, 1)]
 
 func score(team):
-	if (team == 0):
+	if (team == 1):
 		score_left+=1
 		team_kickoff=1
 	else:
