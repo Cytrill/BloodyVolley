@@ -2,6 +2,8 @@ extends Node2D
 
 const IT_JOYSTICK = 0
 const IT_ACTIONS = 1
+const BASE_SPEED = 16
+const MAX_SPEED = 40
 
 var player_number = 0
 var team_number = 0
@@ -43,9 +45,9 @@ func handle_input(delta):
 		
 func handle_input_joystick(delta):
 	if Input.get_joy_axis(player_number,  0) < -joy_tresh:
-		move(-1)
+		move(-BASE_SPEED)
 	elif Input.get_joy_axis(player_number,  0) > joy_tresh:
-		move(1)
+		move(BASE_SPEED)
 	else:
 		move(0)
 	if Input.get_joy_axis(player_number, 1) < -joy_tresh:
@@ -57,7 +59,7 @@ func move(direction):
 	else:
 		get_node("PlayerBody").apply_impulse(Vector2(0,30), Vector2(20*direction, 0))
 
-	if abs(get_node("PlayerBody").get_linear_velocity().x) < 5:
+	if abs(get_node("PlayerBody").get_linear_velocity().x) < MAX_SPEED:
 		if get_node("AnimationPlayer").get_current_animation() != "idle":
 			get_node("AnimationPlayer").play("idle")
 	elif get_node("AnimationPlayer").get_current_animation() != "bounce":
