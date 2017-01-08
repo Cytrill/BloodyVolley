@@ -17,8 +17,10 @@ func _fixed_process(delta):
 		if (body.get_colliding_bodies().size() > 0):
 			body.set_gravity_scale(1)
 	if (body.get_colliding_bodies().size() > 0):
+		get_node("SamplePlayer2D").play("ball_hit")
 		for b in body.get_colliding_bodies():
 			if b.is_in_group( "Ground" ):
+				get_node("SamplePlayer2D").play("score")
 				if (body.get_global_pos().x < get_node("/root/World/Net").get_global_pos().x):
 					get_node("/root/World").score(0)
 				else:

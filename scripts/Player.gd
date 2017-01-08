@@ -68,6 +68,7 @@ func move(direction):
 func jump():
 	if jump_ready:
 		get_node("PlayerBody").apply_impulse(Vector2(0, 30), Vector2(0, -1100))
+		get_node("SamplePlayer").play("jump")
 		jump_ready = false
 		on_ground = false
 

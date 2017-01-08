@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://scenes/Ball.gd" type="Script" id=1]
 [ext_resource path="res://gfx/ball.png" type="Texture" id=2]
+[ext_resource path="res://sfx/samplelibrary.tres" type="SampleLibrary" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -58,5 +59,16 @@ transform/scale = Vector2( 0.5, 0.25 )
 z/relative = false
 texture = ExtResource( 2 )
 modulate = Color( 0, 0, 0, 0.501961 )
+
+[node name="SamplePlayer2D" type="SamplePlayer2D" parent="."]
+
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = ExtResource( 3 )
+config/pitch_random = 0.0
 
 

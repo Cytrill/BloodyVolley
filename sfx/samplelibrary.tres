@@ -1,0 +1,13 @@
+[gd_resource type="SampleLibrary" load_steps=4 format=1]
+
+[ext_resource path="res://sfx/ball_hit.smp" type="Sample" id=1]
+[ext_resource path="res://sfx/jump.smp" type="Sample" id=2]
+[ext_resource path="res://sfx/score.wav" type="Sample" id=3]
+
+[resource]
+
+resource/name = "Sounds"
+samples/ball_hit = { "db":0.0, "pitch":1.0, "sample":ExtResource( 1 ) }
+samples/jump = { "db":0.0, "pitch":1.0, "sample":ExtResource( 2 ) }
+samples/score = { "db":0.0, "pitch":1.0, "sample":ExtResource( 3 ) }
+
